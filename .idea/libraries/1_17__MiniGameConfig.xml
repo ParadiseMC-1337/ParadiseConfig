@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="1.17+ MiniGameConfig">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/1.17+ MiniGameConfig/ParadiseAC-GrimAC.jar!/" />
+      <root url="jar://$PROJECT_DIR$/1.17+ MiniGameConfig/ParadiseAC-NCP.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="1.21+ SurvivalConfig">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/1.21+ SurvivalConfig/ParadiseAC-GrimAC.jar!/" />
+      <root url="jar://$PROJECT_DIR$/1.21+ SurvivalConfig/ParadiseAC-NCP.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
