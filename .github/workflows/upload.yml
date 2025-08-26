@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Create FelixPack.zip
         run: |
-          cd 1.8/bedwars
+          cd 1.8/Bedwars
           zip -r ../ParadiseConfig.zip *
 
       - name: Create temp upload dir
