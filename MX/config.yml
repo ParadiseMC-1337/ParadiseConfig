@@ -1,0 +1,53 @@
+#  _____                               _   _                  _____                    __   _         
+# |  __ \                             | | (_)                / ____|                  / _| (_)        
+# | |__) |   __ _   _ __    __ _    __| |  _   ___    ___   | |        ___    _ __   | |_   _    __ _ 
+# |  ___/   / _` | | '__|  / _` |  / _` | | | / __|  / _ \  | |       / _ \  | '_ \  |  _| | |  / _` |
+# | |      | (_| | | |    | (_| | | (_| | | | \__ \ |  __/  | |____  | (_) | | | | | | |   | | | (_| |
+# |_|       \__,_| |_|     \__,_|  \__,_| |_| |___/  \___|   \_____|  \___/  |_| |_| |_|   |_|  \__, |
+#                                                                                                __/ |
+#                                                                                               |___/ 
+# QQ Group: 1060682915
+# 
+# %player% %check% %component% %info% %vl% %vlLimit%
+
+vlLimit: 100 # to ban
+vlReset: 15 # reset per minute
+alertMsg: "&7[&bMX&r&7]&r &f%player% &7failed &b%check% &7(&b%component%&7) &8| &7[%vl%/%vlLimit%]&f,&7 %info%"
+
+unusual: "&7[&bMX&r&7]&r &b%player% &ePlaying suspiciously &8| &b%check% &8| &7[%vl%/%vlLimit%]&f,&7 %info%"
+suspected: "&7[&bMX&r&7]&r &b%player% &cLooks like a cheater! &8| &b%check% &8| &7[%vl%/%vlLimit%]&f,&7 %info%"
+
+banCommand: "kick %player% %check%"
+
+# "NONE" - disable bypass
+bypass: "NONE"
+bcMsg: "&7[&bMX&r&7]&f %message%"
+punishEffect: false
+interactSpell: true
+
+# Some checks also apply measures,
+# such as a ban on dealing damage to others for a few seconds.
+# AGGRESSIVE (3) - rough hit blocking + teleport
+# CAREFUL (2) - rough hit blocking (full hit block)
+# LENIENT (1) - a detected cheater can still deal hits, but their outgoing damage will be very small
+# SILENT (0) - all measures fully disabled
+prevention: 1
+
+# will remove false positives from the cinematic camera,
+# but it will severely weaken the checks!
+# turn on only when you aim to minimize the number of FP
+ignoreCinematic: false
+
+# /plugins/MX/logs
+logInFiles: true
+
+# MX will save the last 600 rotation ticks.
+# You will be able to view player activity via the MX panel
+# /mx activity %player%
+rotationsContainer: true
+
+# Does not allow players to climb walls using ghost blocks
+preventGhostBlockAbuse: false
+  
+# Whether to auto-enable alerts on join for players with mx.admin permission
+enableAlertsOnJoin: true

@@ -1,21 +1,12 @@
-# ParadiseConfig
+# ParadiseConfig 插件源
 
-### 专为新手服主设计的反作弊配置服务，基于开源免费插件，提供配置和低价的技术支持。
+本项目使用的反作弊插件及其源代码仓库链接如下：
 
-## 为什么选择我们？
+## 插件列表
 
-- ✅ 配置完全免费  
-- ✅ 使用开源插件（不使用破解黑插件，安全可靠）  
-- ✅ 高强度配置  
-- ✅ 低误判率  
-
-## 配置列表
-
-我们为不同版本和不同玩法制定配置
-
-| 配置名称                  | 支持版本        | 适用玩法                           |
-|--------------------------|-----------------|----------------------------------|
-| 1.8 MiniGameConfig       | 1.8 - 1.8.9     | 起床战争、空岛战争、天坑等         |
-| 1.17+ MiniGameConfig     | 1.17 - 1.21     | 起床战争、空岛战争、天坑等         |
-| 1.21+ SurvivalConfig     | 1.21+           | 生存玩法                          |
-| 1.21+ TechnicalSurvivalConfig | 1.21+      | 生电玩法                          |
+-   **GrimAC**: [https://github.com/GrimAnticheat/Grim](https://github.com/GrimAnticheat/Grim)
+-   **AntiCheatAddition**: [https://github.com/Photon-GitHub/AntiCheatAddition](https://github.com/Photon-GitHub/AntiCheatAddition)
+    -   *注意：此插件默认不提供构建好的 `.jar` 文件，需要自行编译。*
+-   **NoCheatPlus**: [https://github.com/Updated-NoCheatPlus/NoCheatPlus](https://github.com/Updated-NoCheatPlus/NoCheatPlus)
+-   **MX-Project (官方)**: [https://github.com/kireikosasha/MX-Project](https://github.com/kireikosasha/MX-Project)
+-   **MX-Project (ParadiseMC 修改版)**: [https://github.com/ParadiseMC-1337/MX-Project](https://github.com/ParadiseMC-1337/MX-Project)

@@ -1,0 +1,837 @@
+# ------------------------------------------------------------------------------------------------------------------- #
+#                              _   _  _____ _                _               _     _ _ _   _                          #
+#                  /\         | | (_)/ ____| |              | |     /\      | |   | (_) | (_)                         #
+#                 /  \   _ __ | |_ _| |    | |__   ___  __ _| |_   /  \   __| | __| |_| |_ _  ___  _ __               #
+#                / /\ \ | '_ \| __| | |    | '_ \ / _ \/ _` | __| / /\ \ / _` |/ _` | | __| |/ _ \| '_ \              #
+#               / ____ \| | | | |_| | |____| | | |  __/ (_| | |_ / ____ \ (_| | (_| | | |_| | (_) | | | |             #
+#              /_/    \_\_| |_|\__|_|\_____|_| |_|\___|\__,_|\__/_/    \_\__,_|\__,_|_|\__|_|\___/|_| |_|             #
+#                                                                                                                     #
+#                                                                                                                     #
+#                           __  __         _       _           ___ _        _                                         #
+#                          |  \/  |__ _ __| |___  | |__ _  _  | _ \ |_  ___| |_ ___ _ _                               #
+#                          | |\/| / _` / _` / -_) | '_ \ || | |  _/ ' \/ _ \  _/ _ \ ' \                              #
+#                          |_|  |_\__,_\__,_\___| |_.__/\_, | |_| |_||_\___/\__\___/_||_|                             #
+#                                                       |__/                                                          #
+# ------------------------------------------------------------------------------------------------------------------- #
+
+# ------------------------------------------------------------------------------------------------------------------- #
+#                                           _      _    _ _ _   _                                                     #
+#                                          /_\  __| |__| (_) |_(_)___ _ _  ___                                        #
+#                                         / _ \/ _` / _` | |  _| / _ \ ' \(_-<                                        #
+#                                        /_/ \_\__,_\__,_|_|\__|_\___/_||_/__/                                        #
+#                                                                                                                     #
+# ------------------------------------------------------------------------------------------------------------------- #
+
+
+#  _____                               _   _                  _____                    __   _         
+# |  __ \                             | | (_)                / ____|                  / _| (_)        
+# | |__) |   __ _   _ __    __ _    __| |  _   ___    ___   | |        ___    _ __   | |_   _    __ _ 
+# |  ___/   / _` | | '__|  / _` |  / _` | | | / __|  / _ \  | |       / _ \  | '_ \  |  _| | |  / _` |
+# | |      | (_| | | |    | (_| | | (_| | | | \__ \ |  __/  | |____  | (_) | | | | | | |   | | | (_| |
+# |_|       \__,_| |_|     \__,_|  \__,_| |_| |___/  \___|   \_____|  \___/  |_| |_| |_|   |_|  \__, |
+#                                                                                                __/ |
+#                                                                                               |___/ 
+# QQ Group: 1060682915
+# 
+
+# BrandHider 修改 Minecraft 调试屏幕上的服务器品牌。
+# 用于自定义消息或隐藏您的服务器软件。
+BrandHider:
+  enabled: true
+  # 这是品牌的替换文本。
+  # 您可以使用字符“&”表示颜色代码和所有在普通检查中可用的占位符。
+  brand: "Paradise"
+  # 动态占位符（如 {time}、{date}、{ping} 等）的刷新率。
+  # 如果您只使用静态文本或占位符，请将其设置为 0（以 tick 为单位）。
+  refresh_rate: 0
+
+# CommandHider 允许您定义一个自定义消息，如果玩家试图执行 AntiCheatAddition 的命令
+# 但没有必要的权限。
+CommandHider:
+  permissions_message: "未知命令。请输入“/help”获取帮助。"
+
+# 此模块会伪造服务器上所有玩家的生命值，从而使 DamageIndicators、HealthTags 和其他
+# 试图显示其他玩家生命值的模组失效。
+# 其他插件仍然可以获取准确的玩家生命值。
+DamageIndicator:
+  enabled: true
+  # 要伪造生命值的实体类别。
+  spoof:
+    players: true
+    others: true
+
+# InformationHider 会混淆发送给所有客户端的特定游戏信息，从而带来信息优势。
+# 原版玩家不会体验到任何差异。
+InformationHider:
+  enabled: true
+  parts:
+    # 这部分会混淆物品的耐久度，以防止作弊程序显示正确的耐久度。
+    # 原版玩家不会看到任何差异。
+    durability:
+      enabled: true
+    # 这部分会混淆附魔，以防止作弊程序显示正确的类型和等级。
+    # 原版玩家不会看到任何差异。
+    enchantments:
+      enabled: true
+    # 这部分会混淆手中物品数量和一般装备。
+    # 原版玩家不会看到任何差异。
+    item_count:
+      enabled: true
+
+# 如果两个玩家看不见对方，ESP 会在数据包级别上隐藏他们的信息。
+# ESP 不会扫描两个玩家之间的整个距离以提高性能。
+# 因此，ESP 有时会显示原本不可见的玩家。
+#
+# 主要功能:
+# - 潜行隐藏:  潜行的玩家将对其他玩家隐藏，除非被直接看到。
+#                    这使得 ESP、追踪器、雷达和相关作弊在没有视线的情况下无法发现潜行的玩家。
+#
+# - 装备隐藏: 如果一个玩家对另一个玩家不可见，ESP 将隐藏他们穿着或手中的任何装备。
+#                    因此，作弊者无法再判断玩家的战斗力。
+#                    在低于 1.11 版本的 Minecraft 服务器上，此部分会自动禁用。
+#
+# 如果有大量玩家集中在一个世界，ESP 检查可能会导致高 CPU 负载。
+# 在创建新世界后，请重启您的服务器以激活其中的 ESP。
+Esp:
+  enabled: false
+  # 两个 ESP 周期之间的时间。
+  # 低值会降低性能，高值可能会导致玩家隐藏时间过长并突然出现。（以 tick 为单位）
+  interval_ticks: 2
+  # 默认情况下，只有潜行的玩家会完全对其他玩家隐藏，因为名称标签可以穿透墙壁。
+  # 如果您禁用了名称标签或选择忽略此原版行为，您可以将此选项设置为 true，
+  # 这将导致所有玩家被完全隐藏，即使没有潜行。
+  only_full_hide: false
+  # Esp 是否应考虑 Minecraft 的第三人称视角？启用此项会降低性能。
+  calculate_third_person_modes: false
+
+# LogBot 清理 AntiCheatAddition 和服务器的旧日志文件。
+# 它每 12 小时和服务器启动时运行一次。
+LogBot:
+  enabled: false
+  # 保留 AntiCheatAddition 日志的天数。设置为 -1 表示无限期保留。
+  AntiCheatAddition: 10
+  # 保留服务器日志的天数。设置为 -1 表示无限期保留。
+  Server: 10
+
+
+# ------------------------------------------------------------------------------------------------------------------- #
+#                                               ___ _           _                                                     #
+#                                              / __| |_  ___ __| |__ ___                                              #
+#                                             | (__| ' \/ -_) _| / /(_-<                                              #
+#                                              \___|_||_\___\__|_\_\/__/                                              #
+#                                                                                                                     #
+# ------------------------------------------------------------------------------------------------------------------- #
+
+# 此模块检测自动食用食物的 AutoEat 机器人。
+# AutoEat VL 每 5 分钟才减少一次，以捕捉作弊，无论进食会话间隔多长。
+# 增加 20 VL。
+AutoEat:
+  enabled: false
+  # 取消消耗事件的 VL 值。设置为 0 表示不取消。
+  cancel_vl: 80
+  # 超过 cancel_vl 的检测将在此时间内停止所有进食（以毫秒为单位）。
+  timeout: 5000
+  # 在特定违规级别执行的命令。
+  thresholds:
+    60: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for AutoEat"
+    120: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for AutoEat"
+    200: "kick {player} AutoEat"
+
+# AutoFish 识别自动钓鱼机器人。
+# 如果您修改了钓鱼时间或行为，请测试此检查是否与您的设置兼容。
+# 由于 Spigot API 的更改，此检查在低于 1.11 版本的 Minecraft 上会自动禁用。
+AutoFish:
+  enabled: false
+  # 取消钓鱼的 VL 值。设置为 0 表示不取消。
+  cancel_vl: 100
+  parts:
+    # 这部分识别瞬时反应速度以检测自动钓鱼模组。
+    # 经验丰富的渔夫可能会出现误报。
+    # 增加 1 到 60 VL。
+    inhuman_reaction:
+      enabled: true
+    # 一致性部分检测简单钓鱼机器人的恒定反应时间。
+    # 增加 1 到 130 VL。
+    consistency:
+      enabled: true
+      # 您是否允许在服务器上使用 AFK 钓鱼农场？
+      allow_afk_fishing_farms: true
+  # 在特定违规级别执行的命令。
+  thresholds:
+    90: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for AutoFish"
+    140: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for AutoFish"
+    200: "kick {player} AutoFish"
+
+# AutoPotion 识别自动投掷药水的机器人，例如在低生命值时。
+# 由于 Spigot API 的更改，此检查在低于 1.11 版本的 Minecraft 上会自动禁用。
+# 增加 50 VL。
+AutoPotion:
+  enabled: false
+  # 取消药水投掷的 VL 值。设置为 0 表示不取消。
+  cancel_vl: 100
+  # 超过 cancel_vl 的检测将在此时间内停止所有药水投掷（以毫秒为单位）。
+  timeout: 1000
+  # 在特定违规级别执行的命令。
+  thresholds:
+    50: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for AutoPotion"
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for AutoPotion"
+    200: "kick {player} AutoPotion"
+
+# AutoTool 检测“智能工具”作弊，该作弊会在敲击方块之前或之后立即切换到完美的
+# 工具。
+# ▸ 当切换距离敲击 ≤ 80 毫秒时，增加 20 VL，
+#   当 ≤ min_switch_delay（默认为 150 毫秒）时，增加 10 VL。
+# ▸ 一旦玩家在 streak_window 内执行 4 次此类切换，额外增加 +40 VL。
+# ▸ 达到 cancel_vl 时，热键栏切换被取消；后续切换将被阻止
+#   <timeout> 毫秒，并且玩家的物品栏会重新同步。
+AutoTool:
+  enabled: false
+  # 取消后续工具切换的违规级别。
+  # 0 = 从不取消。
+  cancel_vl: 200
+  # 达到 cancel_vl 后所有切换被阻止的时间（毫秒）。
+  timeout: 1500
+  # 忽略 ping 高于此值的玩家（毫秒）。 -1 = 不检查 ping。
+  max_ping: 500
+  # 在第一次敲击方块后（或之前）比此速度更快的切换将被标记。
+  # ↓ 较低 = 更宽松   ↑ 较高 = 更严格
+  min_switch_delay: 150
+  # 用于检测即时“切回”的毫秒窗口（+10 VL）。
+  back_switch_delay: 150
+  # 在此窗口（毫秒）内进行 4 次快速切换会触发 +40 VL 的连续奖励。
+  streak_window: 5000
+  # 当玩家的 VL 超过这些阈值时执行的命令。
+  thresholds:
+    50:  "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for AutoTool"
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for AutoTool"
+    200: "kick {player} AutoTool"
+
+# Duping 可以识别出复制物品时熟悉的行为模式。
+# 由于这仅识别模式，因此不完全精确，可能会忽略某些复制情况。
+# 为了帮助调查，AntiCheatAddition 会在其日志文件中记录任何可疑行为的位置。
+Duping:
+  enabled: false
+  parts:
+    # DoubleDropped 部分检测拾取恰好是丢弃物品数量两倍的情况。
+    DoubleDropped:
+      enabled: true
+    # Secret cache 尝试发现被其他方块吞没的秘密缓存的创建。
+    # 复制物品的玩家通常会一次创建多个秘密缓存，以便让小号稍后收集物品。
+    SecretCache:
+      enabled: true
+      # 关闭的容器在多长时间后被检查是否为秘密缓存（以分钟为单位）
+      check_delay: 10
+  # 在特定违规级别执行的命令。
+  thresholds:
+    50: "grim sendalert &7[&fACA&r&7]&r {player} in {world} might be duping items."
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for duping items."
+    200: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for duping items."
+
+# Fastswitch 检测玩家切换热键栏选择过快。
+# 这是作弊者同时使用 Killaura 和 Scaffold 时的典型行为。
+# 当服务器 TPS 过低时，此检查将自动禁用。
+# 增加 25 VL。
+Fastswitch:
+  enabled: false
+  # 取消热键栏选择的 VL 值。设置为 0 表示不取消。
+  cancel_vl: 50
+  # ping 较高的玩家不受此检查影响。设置为 -1 禁用。
+  max_ping: 400
+  # 在特定违规级别执行的命令。
+  thresholds:
+    30: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for Fastswitch"
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for Fastswitch"
+    200: "kick {player} Fastswitch"
+
+# ImpossibleChat 检测在诸如在物品栏中、冲刺、死亡等动作期间发送的聊天消息。
+# 增加 25 VL。
+ImpossibleChat:
+  # 默认禁用，因为某些服务器允许自动聊天模组。
+  # 如果您不允许，请启用此项。
+  enabled: false
+  # 取消消息的 VL 阈值。设置为 0 表示不取消。
+  cancel_vl: 75
+  # 在特定违规级别执行的命令。
+  thresholds:
+    50: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for ImpossibleChat"
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for ImpossibleChat"
+    200: "kick {player} ImpossibleChat"
+
+# Inventory 监视玩家的物品栏操作。在服务器 TPS 低时会自动禁用。
+Inventory:
+  enabled: false
+  # ping 较高的玩家不受此检查影响。设置为 -1 禁用。
+  # 注意: 大多数部分不依赖于 ping，会忽略此值。
+  max_ping: 400
+  parts:
+    # 检测物品栏点击之间的固定间隔，这是箱子窃取机器人的典型特征。
+    # 注意: 如果您允许物品栏排序模组，请禁用此部分。
+    # 增加 20 到 70 VL。
+    AverageHeuristic:
+      enabled: true
+    # 检测玩家长时间快速打开和关闭物品栏。
+    # 这是一些物品栏作弊绕过尝试的典型特征。
+    # 增加 2 VL。
+    Frequency:
+      enabled: true
+    # 此部分检测在物品栏打开时进行攻击。
+    # 增加 20 VL。
+    Hit:
+      enabled: true
+      # 取消攻击的 VL 阈值。设置为 0 表示不取消。
+      cancel_vl: 60
+    # move 部分检测玩家在物品栏中移动。
+    # 增加 5 (移动) 到 20 (跳跃) VL。
+    Move:
+      enabled: true
+      # 取消移动的 VL 阈值。设置为 0 表示不取消。
+      cancel_vl: 60
+      # 减少极高 ping 玩家的误报，但会降低检查效果。
+      # 正常连接由默认的宽松度覆盖。
+      extreme_ping_leniency: false
+    # MultiInteraction 部分防止玩家过快移动物品。
+    # 增加 1 到 8 VL。
+    MultiInteraction:
+      enabled: true
+      # 取消物品栏交互的 VL 阈值。设置为 0 表示不取消。
+      cancel_vl: 25
+    # 此部分检测箱子窃取者在清空物品栏后以完美时机关闭。
+    # 增加 20 到 40 VL。
+    PerfectExit:
+      enabled: true
+    # rotation 部分检测在打开物品栏时头部移动。
+    # 增加 1 VL。
+    Rotation:
+      enabled: true
+    # 检测在冲刺/潜行时进行物品栏交互。
+    # 增加 30 VL。
+    Sprinting:
+      enabled: true
+      # 取消物品栏交互的 VL 阈值。设置为 0 表示不取消。
+      cancel_vl: 110
+    # 使用统计测试来检测某些随机化的机器人点击行为。
+    # 增加 1 到 60 VL。
+    Statistical:
+      enabled: true
+  # 在特定违规级别执行的命令。
+  thresholds:
+    110: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for inventory cheats."
+    160: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for inventory cheats."
+    200: "kick {player} Inventory cheats."
+
+# PacketAnalysis 是一个通用检查，用于搜索直接干扰协议的修改，
+# 例如 Derp、Freecam、Killaura、Aimbot 和其他基于旋转的作弊。
+PacketAnalysis:
+  enabled: true
+  parts:
+    # 此部分检查仅沿一个轴的瞄准移动，这在劣质的自瞄或脚手架中存在。
+    # 增加 20 VL
+    AimStep:
+      enabled: false
+    # 此部分检查客户端在攻击后是否发送手臂动画数据包。
+    # 这只能检测到最差的杀戮光环。
+    # 增加 30 VL。
+    Animation:
+      enabled: true
+    # EqualRotation 扫描重复的旋转数据包。
+    # 这可以捕捉到一些 Scaffold、Tower、Killaura 和 Aimbot 作弊。
+    # 增加 5 VL。
+    EqualRotation:
+      enabled: true
+    # IllegalPitch 检测原版客户端无法发送的非法俯仰角。
+    # 增加 150 VL。
+    IllegalPitch:
+      enabled: true
+    # PerfectRotation 检查某些作弊所表现出的非常精确的旋转。
+    # 增加 4 到 5 VL。
+    PerfectRotation:
+      enabled: true
+  # 在特定违规级别执行的命令。
+  thresholds:
+    40: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bPacketAnalysis &8| &7[&b|&f||||&7]"
+    60: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bPacketAnalysis &8| &7[&b||&f|||&7]"
+    120: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bPacketAnalysis &8| &7[&b|||&f||&7]"
+    160: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bPacketAnalysis &8| &7[&b||||&f|&7]"
+    200:
+    - "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bPacketAnalysis &8| &7[&b|||||&7]"
+    - "kick {player} PacketAnalysis"
+
+# Scaffold 检测在玩家下方放置方块以快速建造桥梁的作弊。
+# 始终活动的 Average 核心部分会增加 20 到 130 VLs。
+Scaffold:
+  enabled: true
+  # 这是如果玩家建造过快，Scaffold 强制执行的主要延迟。
+  # 这涵盖了所有常见的建造技巧和玩家。不过，如果您的服务器上有
+  # 技术非常高超且建造技巧惊人的玩家，您可能需要减小此值（以毫秒为单位）。
+  placement_delay: 50
+  # 取消方块放置的 VL 阈值。设置为 0 表示不取消。
+  cancel_vl: 100
+  # 超过 cancel_vl 的检测将在此时间内停止所有方块放置（以毫秒为单位）。
+  timeout: 1000
+  parts:
+    # 此部分检测玩家放置方块时的可疑角度。
+    # 增加 15 VL。
+    Angle:
+      enabled: false
+    # 此部分检测一些无效的方块放置，例如对着空气或自身放置。
+    # 增加 30 VL。
+    Face:
+      enabled: false
+    # 检测在搭路时跳跃。对于合法玩家来说是可能的，但没有作弊很难实现。
+    # 增加 20 VL。
+    Jumping:
+      enabled: true
+    # 此部分检测可疑的放置位置。
+    # 增加 30 VL。
+    Position:
+      enabled: false
+    # 此部分分析玩家在搭路时的旋转。
+    # 增加 5 到 30 VL
+    Rotation:
+      enabled: true
+    # 此检查与安全行走相关的行为
+    Safewalk:
+      # 增加 15 VL。
+      Edge:
+        enabled: false
+      # 增加 20 VL。
+      Timing:
+        enabled: false
+    # 此部分检测在方块放置之间冲刺。
+    # 增加 45 VL。
+    Sprinting:
+      enabled: false
+  # 在特定违规级别执行的命令。
+  thresholds:
+    40: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bScaffold &8| &7[&b|&f||||&7]"
+    80: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bScaffold &8| &7[&b||&f|||&7]"
+    120: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bScaffold &8| &7[&b|||&f||&7]"
+    160: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bScaffold &8| &7[&b||||&f|&7]"
+    200:
+    - "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bScaffold &8| &7[&b|||||&7]"
+    - "kick {player} Scaffold"
+
+# Shield 检测影响与盾牌交互的作弊。
+# 此检查仅在 Minecraft 1.15+ 中可用
+Shield:
+  enabled: false
+  parts:
+    # 此部分检测玩家在攻击的同时用盾牌格挡。
+    Hit:
+      enabled: true
+      # 取消攻击的 VL 阈值。设置为 0 表示不取消。
+      cancel_vl: 60
+  # 在特定违规级别执行的命令。
+  thresholds:
+    110: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for Shield"
+    160: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for Shield"
+    200: "kick {player} Shield"
+
+# Skinblinker 检测在玩家冲刺或潜行时改变皮肤部件的作弊。
+Skinblinker:
+  enabled: true
+  parts:
+    # 此部分检测在冲刺或潜行时发送的设置数据包。
+    # 增加 50 VL。
+    Sprinting:
+      enabled: true
+    # 当前协议在皮肤数据包中有一个未使用的位，Skinblinker 作弊经常切换该位。
+    # 注意: 使用此位进行装饰的自定义客户端可能会出现误报。
+    UnusedBit:
+      enabled: true
+  # 在特定违规级别执行的命令。
+  thresholds:
+    40: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bSkinblinker &8| &7[&b|&f||||&7]"
+    80: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bSkinblinker &8| &7[&b||&f|||&7]"
+    120: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bSkinblinker &8| &7[&b|||&f||&7]"
+    160: "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bSkinblinker &8| &7[&b||||&f|&7]"
+    200:
+    - "grim sendalert &7[&fACA&r&7]&r {player} &7failed &bSkinblinker &8| &7[&b|||||&7]"
+    - "kick {player} Skinblinker"
+
+# Teaming 检测可能组队的玩家。
+Teaming:
+  enabled: false
+  # 玩家之间被视为组队的最大距离是多少？（以方块为单位）
+  proximity_range: 4.5
+  # 允许的最大队伍规模（1 = 不允许组队）
+  allowed_size: 1
+  # 必须经过多长时间不攻击附近玩家才被视为组队？（以毫秒为单位）
+  no_pvp_time: 6000
+  # 此处列出了所有启用此检查的世界。
+  enabled_worlds:
+    - "world"
+  # 在这里，您可以定义不运行检查的区域。
+  # 条目结构如下:
+  # - "<affected_world> <x1> <z1> <x2> <z2>"
+  safe_zones:
+    - "world -15 -15 15 15"
+  # 如果启用此设置，AntiCheatAddition 将把任何禁用 PVP 的 worldguard 区域视为安全区。
+  worldguard: false
+  # 这些 VL 对于一个团队是累积的。
+  # 每个团队成员每个间隔获得（实际团队规模）-（允许团队规模）VL。
+  # 在特定违规级别执行的命令。
+  thresholds:
+    4: "grim sendalert &7[&fACA&r&7]&r {player} in {world} may be Teaming"
+    10: "grim sendalert &7[&fACA&r&7]&r {player} in {world} are suspected for Teaming"
+    15: "grim sendalert &7[&fACA&r&7]&r {player} in {world} are highly suspected for Teaming"
+
+# Tower 检测允许快速垂直建造的作弊。
+# 增加 1 到 1000 VL（后者保留给即时建塔）。
+Tower:
+  enabled: false
+  # 取消方块放置的 VL 阈值。设置为 0 表示不取消。
+  cancel_vl: 60
+  # 超过 cancel_vl 的检测将在此时间内停止所有方块放置（以毫秒为单位）。
+  timeout: 6000
+  # 在特定违规级别执行的命令。
+  thresholds:
+    60: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is suspected for Tower"
+    100: "grim sendalert &7[&fACA&r&7]&r {player} in {world} is highly suspected for Tower"
+    200: "kick {player} Tower"
+
+
+# ------------------------------------------------------------------------------------------------------------------- #
+#                                            ___          _   _          _                                            #
+#                                           / __| ___ _ _| |_(_)_ _  ___| |                                           #
+#                                           \__ \/ -_) ' \  _| | ' \/ -_) |                                           #
+#                                           |___/\___|_||_\__|_|_||_\___|_|                                           #
+#                                                                                                                     #
+# ------------------------------------------------------------------------------------------------------------------- #
+
+# Sentinel 监视您的服务器，在加入时检测模组，有时甚至是某些作弊客户端，且没有误报。
+# 此外，它还试图识别可以安全封禁的各种漏洞和非法物品。
+# 您可以在自定义部分定义自己的检查。
+Sentinel:
+  Exploits:
+    # BookPage 防止恶意书籍导致服务器延迟、执行命令或打开文件。
+    # 此哨兵会消除服务器上与以下类别相对应的任何书籍。
+    BookPage:
+      enabled: true
+      # 您服务器上书籍的页面限制是多少？
+      # 原版客户端在使用书与笔书写时有 100 页的限制。
+      # 如果您的服务器使用具有更多页面的自定义书籍，请增加此数字。
+      max_page_count: 100
+      # 是否擦除在用户电脑上打开本地文件的书籍？
+      disallow_open_file: true
+      # 是否擦除使用非标准 Minecraft 颜色（可能导致错误或延迟）的书籍？
+      disallow_custom_colors: true
+      # 所有带有执行以下列出命令的 ClickAction 的书籍都将被删除。
+      disallowed_commands:
+        - "op"
+        - "deop"
+        - "lp"
+        - "luckperms"
+        - "permissions"
+        - "perms"
+        - "perm"
+      # 检测到可疑书籍时执行的命令:
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Maliciously modified book."
+
+    # CommandBlock 检测并移除玩家物品栏中未经授权的命令方块。
+    CommandBlock:
+      enabled: true
+      # 检测到命令方块时执行的命令:
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Command block."
+
+    # CreativeKillPotion 检测并删除利用漏洞即使在创造模式下也能杀死玩家的药水。
+    CreativeKillPotion:
+      enabled: true
+      # 检测到非法药水时执行的命令:
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Illegal Potion."
+
+    # 各种作弊客户端允许玩家攻击自己，在某些情况下给予他们优势，比如
+    # 滥用游戏的死亡机制。
+    SelfDamage:
+      enabled: true
+      # 检测到自我攻击时执行的命令:
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Self damage."
+
+    # TrollPotion 检测并删除长时间严重损害玩家视力的药水。
+    # 涵盖效果: 失明、黑暗 (Minecraft 1.19+), 反胃
+    TrollPotion:
+      enabled: true
+      # 触发检测效果的最短时间（秒）
+      min_effect_time: 500
+      # 如果检测到非法药水，将执行什么命令？
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Troll Potion"
+
+  # 一款流行的 pvp 模组，可以显示 HUD、披风并具有多种社交功能。
+  5Zig:
+    enabled: false
+    # 如果检测到该模组，将执行什么命令？
+    commands:
+      - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses 5Zig"
+
+  # 一款流行的 PvP 修改，以增强冲刺行为 (ToggleSprint)
+  BetterSprinting:
+    enabled: false
+    # 这个模组提供了一种禁用其部分功能的方法。
+    disable:
+      # 设置为 true 以完全禁用该模组。
+      # 如果此项设置为 true，其他选项将被忽略。
+      general: false
+      # 这在创造模式或生存模式下飞行时为玩家提供可配置的速度提升。
+      survival_fly_boost: true
+      enable_all_dirs: true
+    # 如果检测到该模组，将执行什么命令？
+    commands:
+      - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses BetterSprinting"
+
+  # 这个 Sentinel 适用于最新版本的 LabyMod，一个流行的 PvP 模组，类似于 5zig，但功能更多并支持 TS3。
+  # 如果激活，Sentinel 将覆盖此 Sentinel 工作所需的 LabyModAPI 插件的配置选项。
+  LabyMod:
+    enabled: false
+    # 这允许您向 LabyMod 玩家在他们的 tablist 中显示一个横幅图像。
+    # 根据他们的文档 (https://docs.labymod.net/pages/server/displays/tablist/)
+    # 图像比例必须为 5:1，推荐分辨率为 1280x256 像素。
+    TablistBanner:
+      enabled: false
+      # 请在此处指定获取图像的 URL。
+      url: ""
+    # 此设置确定您的服务器上是否允许 LabyMod-Voicechat（true 表示允许）。
+    Voicechat: true
+    # 这个模组提供了一种禁用其部分功能的方法。
+    # 如果您想阻止模组的某个部分，请将相应的值设置为 true
+    disable:
+      # 修复 Minecraft 中快速放置岩浆的渲染错误（幽灵方块）。
+      # 如果岩浆是您服务器的重要组成部分，这可能被视为一种作弊形式。
+      improved_lava: false
+      # 解决了 Minecraft 中快速头部移动导致准星略微滞后的问题。
+      # 这可以被视为半作弊行为，因为它在战斗中提供了微小的瞄准优势。
+      crosshair_sync: false
+      # 这修复了一些物品栏错误，改善了药水和汤的补充。
+      # 许多人认为这是一种作弊形式，因为它提供了巨大的可靠性加成。
+      refill_fix: true
+      # 纯粹美观的 GUI 修改，包括坐标、方向和当前时间。
+      gui_all: false
+      # 这以 HUD 的形式在显示器上呈现玩家的药水效果。
+      gui_potion_effects: false
+      # 这在 HUD 中显示玩家的当前盔甲（包括耐久度）。
+      gui_armor_hud: false
+      # 这在 HUD 中显示玩家的武器和他们的箭矢数量。
+      gui_item_hud: false
+      # 一项纯粹美观的功能，改变了建筑动画。
+      blockbuild: false
+      # 各种装饰性功能
+      tags: false
+      # 这添加了频道和过滤器以增强聊天体验（客户端）。
+      # 这类似于作弊，因为它包含一个 AutoText 模块，让您可以快速编写预定消息，
+      # 加上专属符号（绕过聊天过滤器）。
+      chat: false
+      # 一项纯粹美观的功能，改变了手臂动画。
+      animations: false
+      # 这会渲染玩家的饱和度，有时被视为不公平的优势。
+      saturation_bar: false
+    # 如果检测到该模组，将执行什么命令？
+    commands:
+      - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses LabyMod"
+
+  # 一款投影（客户端）全息图以简化建筑的模组，但也有一个用于下载世界的功能模块。
+  # 由于该模组年代久远，此 Sentinel 仅在 Minecraft 1.8-1.12 版本上激活。
+  Schematica:
+    enabled: false
+    # 这个模组提供了一种禁用其部分功能的方法。
+    # 如果您想阻止模组的某个部分，请将相应的值设置为 true
+    disable:
+      # 根据蓝图自动建造。
+      # 这有时被称为建筑机器人。
+      printer: true
+      # 这将世界的一部分保存为蓝图，就像一个有限的 WorldDownloader 模组。
+      save: true
+      # 这允许在您的服务器上加载一个蓝图用于打印或全息图。
+      load: false
+    # 如果检测到该模组，将执行什么命令？
+    commands:
+      - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses Schematica"
+
+  # Vape 是一款广泛使用的幽灵客户端，经常出现在排名 PvP 游戏中，并且经过专门设计，在屏幕共享中特别难以发现。
+  # Sentinel 只能识别一些破解的客户端版本。
+  # 此 Sentinel 在 Minecraft 1.13+ 中无法工作，因为破解版本是 1.8，而 1.13 的 API 发生了巨大变化。
+  Vape:
+    enabled: true
+    # 如果检测到该模组，将执行什么命令？
+    # 可以考虑自动封禁。
+    commands:
+      - "kick {player} Illegal client modification"
+
+  # WorldDownloader 是一款流行的修改，用于检索服务器的地图。
+  WorldDownloader:
+    enabled: false
+    # 这个模组提供了一种禁用其部分功能的方法。
+    disable:
+      # 设置为 true 以完全禁用该模组。
+      # 如果此项设置为 true，其他选项将被忽略。
+      general: true
+      # 这会禁用服务器 api 中尚未包含的该模组的未来功能。
+      future: true
+      # 这设置了从玩家位置下载的区块范围。
+      # -1 表示无限范围。范围的形状是正方形，不是圆形。
+      # 如果 chunk_caching 设置为 false，此项无效。
+      save_radius: 0
+      # 这会禁用区块缓存，该功能允许玩家保存他们移动过的所有区块。
+      chunk_caching: true
+      # 玩家是否应该能够保存（tile）实体？
+      entity_saving: true
+      tile_entity_saving: true
+      # 如果 tile_entity_saving 设置为 true，此项无效。
+      container_saving: true
+    # 如果检测到该模组，将执行什么命令？
+    commands:
+      - "kick {player} WorldDownloader"
+
+  # 在这里，您可以定义自己的简单 Sentinel 检查。
+  # 请确保检查名称中不使用特殊字符且没有重复名称。
+  # 通道名称和“contains”中允许使用特殊字符。
+  #
+  # 创建自己的检查的基本指南:
+  # (1) 复制 PXMod 的部分
+  # (2) 将该部分的名称从 PXMod 重命名为 <您的自定义检查名称>
+  # (3) 在 incoming channels 中添加您想要监听的通道（例如“minecraft:brand”）。
+  #     AntiCheatAddition 会自动尝试生成旧版通道名称并同时监听它们
+  #     （在这种情况下是“MC|Brand”）。如果您知道旧版名称，请添加它，AntiCheatAddition 会为您的服务器版本选择
+  #     正确的名称。
+  # (4) 如果需要，阐明消息应包含什么内容以触发检查。例如，如果您正在监听
+  #     “minecraft:brand”和 superspecialmod:version 来检测一个模组，您可以将 containsAny 定义为：[“SSM”, “ssm”]。
+  #     注意：这纯粹是一个虚构的例子。模组有不同的通道和消息。
+  #     许多模组不进行通信，尤其是作弊客户端。
+  # (5) 定义检测到模组时要执行的命令。命令在玩家加入后立即执行一次。
+  #     这允许您通过在玩家加入时踢出他们来禁止服务器上某个特定的模组。
+  Custom:
+    # 这会检测 Forge。
+    Forge:
+      enabled: false
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "minecraft:brand"
+        - "MC|Brand"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ "forge", "fml" ]
+      # 如果检测到该模组，将执行什么命令？
+      commands:
+        - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses Forge"
+
+    # 这会检测 Liteloader。
+    LiteLoader:
+      enabled: false
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "minecraft:brand"
+        - "MC|Brand"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ "LiteLoader", "Liteloader" ]
+      # 如果检测到该模组，将执行什么命令？
+      commands:
+        - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses LiteLoader"
+
+    # 这会检测 PixelClient。
+    PixelClient:
+      enabled: false
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "mc:pixel"
+        - "MC|PIXEL"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ ]
+      # 如果检测到该模组，将执行什么命令？
+      commands:
+        - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses PixelClient"
+
+    # 这会检测 PXMod。
+    PXMod:
+      enabled: false
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "px:version"
+        - "PX|Version"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ ]
+      # 如果检测到该模组，将执行什么命令？
+      commands:
+        - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses PXMod"
+
+    # 这会检测 Rift。
+    Rift:
+      enabled: false
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "minecraft:brand"
+        - "MC|Brand"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ "rift" ]
+      # 如果检测到该模组，将执行什么命令？
+      commands:
+        - "grim sendalert &7[&fACA&r&7]&r {player} in {world} uses Rift"
+
+    # 这会检测 Winterware。
+    Winterware:
+      enabled: true
+      # AntiCheatAddition 将监听的通道。
+      incoming_channels:
+        - "lc:brand"
+        - "LC|Brand"
+      # 消息必须包含列表中的所有字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAll: [ ]
+      # 消息必须包含列表中至少一个字符串才能触发检测。[] 是一个空列表。
+      # 如果列表为空，则接受所有消息。
+      containsAny: [ ]
+      # 如果检测到该模组，将执行什么命令？
+      # 可以考虑自动封禁。
+      commands:
+        - "kick {player} Illegal Client Modifications"
+
+
+# ------------------------------------------------------------------------------------------------------------------- #
+#                                               ___      _                                                            #
+#                                              |   \ ___| |__ _  _ __ _                                               #
+#                                              | |) / -_) '_ \ || / _` |                                              #
+#                                              |___/\___|_.__/\_,_\__, |                                              #
+#                                                                 |___/                                               #
+#                                                                                                                     #
+# ------------------------------------------------------------------------------------------------------------------- #
+
+# 定义调试日志级别
+# 可能的值有: "OFF", "SEVERE", "WARNING", "INFO", "FINE", "FINER", "FINEST", "ALL" 等
+# 默认为 "INFO"，将任何值设置为 "FINE" 会记录违规调试信息。
+# "OFF" 禁用日志记录，"FINER" 会记录各种调试消息，"ALL" 或 "FINEST" 会启用垃圾邮件般的调试消息。
+Debug:
+  # 控制台的日志记录级别
+  console_level: "INFO"
+  # 日志文件的日志记录级别
+  # 提交错误报告时，文件日志级别必须至少为 "FINE"
+  # 如果您想提交绕过，请将其设置为 "FINER"
+  file_level: "FINE"
+  # 具有调试权限的玩家的日志记录级别。他们仍然可以使用调试命令禁用它们
+  # 即使此项不是 "OFF"
+  player_level: "FINE"

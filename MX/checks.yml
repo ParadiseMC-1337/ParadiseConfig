@@ -1,0 +1,90 @@
+#  _____                               _   _                  _____                    __   _         
+# |  __ \                             | | (_)                / ____|                  / _| (_)        
+# | |__) |   __ _   _ __    __ _    __| |  _   ___    ___   | |        ___    _ __   | |_   _    __ _ 
+# |  ___/   / _` | | '__|  / _` |  / _` | | | / __|  / _ \  | |       / _ \  | '_ \  |  _| | |  / _` |
+# | |      | (_| | | |    | (_| | | (_| | | | \__ \ |  __/  | |____  | (_) | | | | | | |   | | | (_| |
+# |_|       \__,_| |_|     \__,_|  \__,_| |_| |___/  \___|   \_____|  \___/  |_| |_| |_|   |_|  \__, |
+#                                                                                                __/ |
+#                                                                                               |___/ 
+# QQ Group: 1060682915
+# 
+aim_statistics:
+  addGlobalVl(bot_pattern): 35
+  addGlobalVl(improbable): 30
+  addGlobalVl(iqr): 25
+  addGlobalVl(zfactor): 0
+  hitCancelTimeMS(bot_pattern): 0
+  hitCancelTimeMS(improbable): 4000
+  hitCancelTimeMS(iqr): 0
+  hitCancelTimeMS(zfactor): 5500
+  localVlLimit(improbable): 15.0
+  localVlLimit(iqr): 11.0
+  localVlLimit(zfactor): 7.0
+aim_complex:
+  addGlobalVl(distinct): 5
+  addGlobalVl(entropy): 0
+  addGlobalVl(randomizer): 35
+  hitCancelTimeMS(distinct): 3000
+  hitCancelTimeMS(entropy): 5000
+  hitCancelTimeMS(randomizer): 0
+  localVlLimit(distinct): 4.0
+  localVlLimit(entropy): 30
+  localVlLimit(randomizer): 2.5
+aim_heuristic:
+  constant_check:
+    constant(1)_needVl: 8
+    constant(2)_needVl: 6
+    constant(3)_needVl: 6
+  smooth_check:
+    addGlobalVl: 35
+  pattern_check:
+    addGlobalVl: 20
+    buffer: 2.5
+    buffer_fade: 0.3
+    hitCancelTimeMS: 5000
+  factor_check:
+    addGlobalVl: 40
+    buffer: 2.5
+    ticksToReset: 2500
+  invalid_check:
+    hitCancelTimeMS: 0
+    addGlobalVl: 100
+  inconsistent_check:
+    addGlobalVl: 0
+    buffer: 2
+    hitCancelTimeMS: 4000
+  basic_component:
+    addGlobalVl(component): 0
+    addGlobalVl(interpolation): 0
+    heuristic(aggressive)_addLocalVl: 50
+    heuristic(aim)_addLocalVl: 100
+    heuristic(constant)_addLocalVl: 65
+    heuristic(interpolation)_addLocalVl: 55
+    heuristic(sync)_addLocalVl: 125
+    hitCancelTimeMS(component): 3500
+    hitCancelTimeMS(interpolation): 2500
+    localVl_fade(component): 5
+    localVl_fade(interpolation): 5
+    localVl_limit(component): 400
+    localVl_limit(interpolation): 400
+    pattern(random)_addLocalVl: 25
+    pattern(snap)_addLocalVl: 55
+    randomizer_flaw_addVl: 25
+aim_analysis:
+  addGlobalVl(linear): 5
+  addGlobalVl(longterm): 55
+  addGlobalVl(rank): 20
+  localVlLimit(rank): 6.0
+aim_ml:
+  enabled: true
+  strange_vl: 20
+  suspected_vl: 40
+  unusual_vl: 10
+ghost_block_abuse:
+  buffer: 2
+velocity:
+  buffer: 6
+  enabled: false
+auto_clicker:
+  addGlobalVl: 5
+  enabled: true

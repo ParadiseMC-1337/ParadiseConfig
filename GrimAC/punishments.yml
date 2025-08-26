@@ -1,0 +1,325 @@
+#  _____                               _   _                  _____                    __   _         
+# |  __ \                             | | (_)                / ____|                  / _| (_)        
+# | |__) |   __ _   _ __    __ _    __| |  _   ___    ___   | |        ___    _ __   | |_   _    __ _ 
+# |  ___/   / _` | | '__|  / _` |  / _` | | | / __|  / _ \  | |       / _ \  | '_ \  |  _| | |  / _` |
+# | |      | (_| | | |    | (_| | | (_| | | | \__ \ |  __/  | |____  | (_) | | | | | | |   | | | (_| |
+# |_|       \__,_| |_|     \__,_|  \__,_| |_| |___/  \___|   \_____|  \___/  |_| |_| |_|   |_|  \__, |
+#                                                                                                __/ |
+#                                                                                               |___/ 
+# QQ Group: 1060682915
+# 
+# %check_name% - 检查名称
+# %description% - 检查的介绍
+# %vl% - 违规
+# %verbose% - 额外信息
+# %player% - 玩家名字
+# [alert] - 警告的特殊命令
+# [webhook] - 警告discord webhook 的特殊命令
+# [proxy] - 用于使用(BungeeCord/Velocity)服务器时的警报
+# [log] - 记录vl到数据库中
+Punishments:
+  # 模拟检测
+  Movement:
+    remove-violations-after: 5
+    checks:
+      - "Simulation"
+      - "GroundSpoof"
+      - "NoFall"
+      - "Sprint"
+      - "NoSlow"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bMovement &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "100:0 [log]"
+      - "100:0 kick %player% %check_name%"
+  # 模拟检测
+  Simulation:
+    remove-violations-after: 60
+    checks:
+      - "Simulation"
+    commands:
+      - "20:20 [log]"
+      - "500:0 kick %player% %check_name%"
+
+  # 地面伪造检测
+  GroundSpoof:
+    remove-violations-after: 300
+    checks:
+      - "GroundSpoof"
+    commands:
+      - "20:20 [log]"
+      - "50:0 kick %player% %check_name%"
+
+  # 变速齿轮检测
+  Timer:
+    remove-violations-after: 5
+    checks:
+      - "Timer"
+      - "TimerLimit"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bVelocity &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "50:0 [log]"
+      - "50:0 kick %player% %check_name%"
+      
+  Timer:
+    remove-violations-after: 300
+    checks:
+      - "Timer"
+      - "!TimerLimit"
+    commands:
+      - "5:5 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  TimerLimit:
+    remove-violations-after: 60
+    checks:
+      - "TimerLimit"
+    commands:
+      - "20:20 [log]"
+      - "500:0 kick %player% %check_name%"
+
+  # 反坠落伤害检测
+  NoFall:
+    remove-violations-after: 300
+    checks:
+      - "NoFall"
+    commands:
+      - "1:1 [log]"
+      - "5:0 kick %player% %check_name%"
+
+  # 击退检测
+  Velocity:
+    remove-violations-after: 10
+    checks:
+      - "Knockback"
+      - "Explosion"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bVelocity &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "10:0 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  Knockback:
+    remove-violations-after: 60
+    checks:
+      - "Knockback"
+    commands:
+      - "1:1 [log]"
+      - "25:0 kick %player% %check_name%"
+
+  # 爆炸检测
+  Explosion:
+    remove-violations-after: 300
+    checks:
+      - "Explosion"
+    commands:
+      - "1:1 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  BadPackets:
+    remove-violations-after: 5
+    checks:
+      - "BadPackets"
+      - "Post"
+      - "PacketOrder"
+      - "Crash"
+      - "TransactionOrder"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bBadPackets &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "10:0 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  # 传送检测
+  Post:
+    remove-violations-after: 300
+    checks:
+      - "Post"
+    commands:
+      - "20:20 [log]"
+      - "40:0 kick %player% %check_name%"
+
+  # 恶意数据包检测
+  BadPacket:
+    remove-violations-after: 300
+    checks:
+      - "BadPackets"
+    commands:
+      - "5:5 [log]"
+      - "20:0 kick %player% %check_name%"
+
+  # 数据包顺序检测
+  PacketOrder:
+    remove-violations-after: 300
+    checks:
+      - "PacketOrder"
+    commands:
+      - "5:5 [log]"
+      - "20:0 kick %player% %check_name%"
+
+  # 崩溃检测
+  Crash:
+    remove-violations-after: 114514
+    checks:
+      - "Crash"
+    commands:
+      - "1:1 [log]"
+      - "1:0 kick %player% &c试图帮助服主关闭服务器。"
+      
+  Hitbox:
+    remove-violations-after: 300
+    checks:
+      - "Reach"
+      - "Hitboxes"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bReach/Hitboxes &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "50:0 [log]"
+      - "50:0 kick %player% %check_name%"
+
+  # 攻击距离检测
+  Reach:
+    remove-violations-after: 300
+    checks:
+      - "Reach"
+    commands:
+      - "1:1 [log]"
+      - "5:0 kick %player% %check_name%"
+
+  # 碰撞箱检测
+  Hitboxes:
+    remove-violations-after: 60
+    checks:
+      - "Hitboxes"
+    commands:
+      - "5:5 [log]"
+      - "25:0 kick %player% %check_name%"
+
+  # 无减速检测
+  NoSlow:
+    remove-violations-after: 60
+    checks:
+      - "NoSlow"
+    commands:
+      - "20:20 [log]"
+      - "250:0 kick %player% %check_name%"
+
+  # 疾跑检测
+  Sprint:
+    remove-violations-after: 60
+    checks:
+      - "Sprint"
+    commands:
+      - "5:5 [log]"
+      - "20:0 kick %player% %check_name%"
+
+  # 多重动作检测
+  MultiActions:
+    remove-violations-after: 300
+    checks:
+      - "MultiActions"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bMultiActions &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "2:2 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  # 放置检测
+  Place:
+    remove-violations-after: 300
+    checks:
+      - "Place"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bPlace &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "2:2 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  # 机器人检测
+  Baritone:
+    remove-violations-after: 300
+    checks:
+      - "Baritone"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bBaritone &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+
+  # 破坏检测
+  Break:
+    remove-violations-after: 300
+    checks:
+      - "Break"
+      - "!RotationBreak"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bHitboxes &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "2:2 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  Break:
+    remove-violations-after: 150
+    checks:
+      - "RotationBreak"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bHitboxes &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "5:5 [log]"
+      - "50:0 kick %player% %check_name%"
+
+  # 交易顺序检测
+  TransactionOrder:
+    remove-violations-after: 300
+    checks:
+      - "TransactionOrder"
+    commands:
+      - "2:2 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  # 鞘翅检测
+  # Elytra:
+  #   remove-violations-after: 300
+  #   checks:
+  #     - "Elytra"
+  #   commands:
+  #     - "1:1 grim sendalert %prefix% &f%player% &7failed &bElytra &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+
+  # 交互检测
+  Interact:
+    remove-violations-after: 300
+    checks:
+      - "Interact"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bInteract &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "2:2 [log]"
+      - "10:0 kick %player% %check_name%"
+
+  # 杀戮光环检测
+  Killaura:
+    remove-violations-after: 300
+    checks:
+      - "Killaura"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bKillaura &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+
+  # 自瞄检测
+  Aim:
+    remove-violations-after: 300
+    checks:
+      - "!Aim"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bAim &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+
+  # 自动点击检测
+  Autoclicker:
+    remove-violations-after: 300
+    checks:
+      - "Autoclicker"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bAutoclicker &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+
+  Chat:
+    remove-violations-after: 300
+    checks:
+      - "Chat"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bChat &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "5:5 [log]"
+
+  Exploit:
+    remove-violations-after: 300
+    checks:
+      - "Exploit"
+    commands:
+      - "1:1 grim sendalert %prefix% &f%player% &7failed &bExploit &8| &7vl:%vl%&f,&7 %check_name%%experimental%&f,&7 Verbose:%verbose%"
+      - "5:5 [log]"
