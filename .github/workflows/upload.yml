@@ -14,12 +14,11 @@ jobs:
       - name: Create FelixPack.zip
         run: |
           ls -la
-          cd "$GITHUB_WORKSPACE/1.8/Bedwars"
+          cd "$GITHUB_WORKSPACE/1.8"
           zip -r ../ParadiseConfig.zip *
 
       - name: Create temp upload dir
         run: |
-          cd ..
           ls -la
           mkdir -p upload_temp
           cp ParadiseConfig.zip upload_temp/
