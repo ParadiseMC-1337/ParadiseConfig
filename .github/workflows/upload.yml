@@ -9,10 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+      
       - name: Create FelixPack.zip
         run: |
-          ls
-          cd ./1.8/Bedwars
+          ls -la
+          cd "$GITHUB_WORKSPACE/1.8/Bedwars"
           zip -r ../ParadiseConfig.zip *
 
       - name: Create temp upload dir
