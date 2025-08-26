@@ -20,6 +20,7 @@ jobs:
       - name: Create temp upload dir
         run: |
           cd ..
+          ls -la
           mkdir -p upload_temp
           cp ParadiseConfig.zip upload_temp/
           
