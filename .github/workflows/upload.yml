@@ -1,0 +1,30 @@
+name: Upload Anticheat
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Create FelixPack.zip
+        run: |
+          cd 1.8/bedwars
+          zip -r ../ParadiseConfig.zip *
+
+      - name: Create temp upload dir
+        run: |
+          mkdir -p upload_temp
+          cp ParadiseConfig.zip upload_temp/
+          
+      - name: Upload JAR to FTP
+        uses: modern-dev/ftp-mirror@v2
+        with:
+          exclude: classes generated-sources maven-archiver maven-status
+          server: ${{ secrets.FTP_SERVER }}
+          user: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local_dir: upload_temp
+          remote_dir: /4C01/files
